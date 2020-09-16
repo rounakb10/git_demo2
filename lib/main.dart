@@ -17,9 +17,11 @@ class MyApp extends StatelessWidget {
           color: Color(0xff121212),
         ),
         cardColor: Colors.transparent,
+        bottomAppBarColor: Color(0xff121212),
         cardTheme: CardTheme(elevation: 0),
       ),
 //      theme: ThemeData.light().copyWith(
+//        scaffoldBackgroundColor: Colors.white,
 //        cardColor: Colors.transparent,
 //        cardTheme: CardTheme(elevation: 0),
 //      ),
