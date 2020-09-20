@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -8,11 +9,27 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    String id = ThemeProvider.controllerOf(context).currentThemeId;
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: Container(),
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text('Enable Dark Mode'),
+            trailing: Switch(
+              value: id == 'actual_light' ? false : true,
+              onChanged: (value) {
+                if (value)
+                  ThemeProvider.controllerOf(context).setTheme("actual_dark");
+                else
+                  ThemeProvider.controllerOf(context).setTheme("actual_light");
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
