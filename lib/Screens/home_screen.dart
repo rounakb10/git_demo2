@@ -18,48 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
           'Expenses',
           style: TextStyle(fontSize: 24),
         ),
-        //centerTitle: true,
+        centerTitle: true,
       ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {},
-//        child: Icon(
-//          Icons.add,
-//          size: 30,
-//        ),
-//      ),
-//      bottomNavigationBar: BottomNavigationBar(
-//        currentIndex: _currentIndex,
-//        unselectedIconTheme: IconThemeData(size: 20),
-//        selectedIconTheme: IconThemeData(size: 20, color: Colors.blue),
-//        selectedLabelStyle: TextStyle(color: Colors.blue),
-//        items: [
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.home),
-//            title: Text('Home'),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.dashboard),
-//            title: Text('Dashboard'),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.add_circle),
-//            title: Text('Add'),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.settings),
-//            title: Text('Settings'),
-//          ),
-//          BottomNavigationBarItem(
-//            icon: Icon(Icons.menu),
-//            title: Text('Menu'),
-//          ),
-//        ],
-//        onTap: (index) {
-//          setState(() {
-//            _currentIndex = index;
-//          });
-//        },
-//      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -67,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 20,
+                height: 24,
               ),
               Text(
                 'Balance',
@@ -80,12 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    '\$20000',
+                    '\$20,000',
                     style: TextStyle(fontSize: 30),
                   ),
-                  Icon(
-                    Icons.remove_red_eye,
-                    size: 25,
+                  IconButton(
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      size: 25,
+                    ),
+                    onPressed: () => print('Pressed eye button'),
                   ),
                 ],
               ),

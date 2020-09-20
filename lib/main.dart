@@ -8,16 +8,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Color bgColor = Color(0xff121212);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Color(0xff121212),
+        scaffoldBackgroundColor: bgColor,
         accentColor: Colors.grey[850],
         appBarTheme: AppBarTheme(
-          color: Color(0xff121212),
+          color: bgColor,
         ),
         cardColor: Colors.transparent,
-        bottomAppBarColor: Color(0xff121212),
+        bottomAppBarColor: bgColor,
         cardTheme: CardTheme(elevation: 0),
       ),
 //      theme: ThemeData.light().copyWith(

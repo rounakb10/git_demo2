@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:git_demo2/Widgets/FAB.dart';
 
 import 'dashboard_screen.dart';
 import 'home_screen.dart';
@@ -21,6 +22,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Animation rotationAnimationFab;
   Animation<Color> fabColor;
 
+  Animation<Color> _bgColor;
+
   @override
   void initState() {
     animationController =
@@ -41,6 +44,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
     fabColor = ColorTween(begin: Colors.blue, end: Colors.red)
         .animate(animationController);
+    _bgColor = ColorTween(begin: null, end: Color(0x90000000))
+        .animate(animationController);
 
     super.initState();
 
@@ -56,8 +61,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  Color _bgColor;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -69,103 +72,30 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       floatingActionButton: Container(
         width: size.width,
         height: size.height,
-        color: _bgColor,
+        color: _bgColor.value,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            //SizedBox(height: 3 * size.height / 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(width: 50),
-                Transform(
-                  transform: Matrix4.rotationZ(
-                      getRadiansFromDegrees(rotationAnimation.value))
-                    ..scale(degOneTranslationAnimation.value),
-                  alignment: Alignment.center,
-                  child: FAB(
-                    color: Colors.blue,
-                    width: 50,
-                    height: 50,
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                    onClick: () {
-                      print('Hello');
-                    },
-                  ),
-                ),
-                Transform(
-                  transform: Matrix4.rotationZ(
-                      getRadiansFromDegrees(rotationAnimation.value))
-                    ..scale(degOneTranslationAnimation.value),
-                  alignment: Alignment.center,
-                  child: FAB(
-                    color: Colors.blue,
-                    width: 50,
-                    height: 50,
-                    icon: Icon(
-                      Icons.attach_money,
-                      color: Colors.white,
-                    ),
-                    onClick: () {
-                      print('Hello');
-                    },
-                  ),
-                ),
-                Transform(
-                  transform: Matrix4.rotationZ(
-                      getRadiansFromDegrees(rotationAnimation.value))
-                    ..scale(degOneTranslationAnimation.value),
-                  alignment: Alignment.center,
-                  child: FAB(
-                    color: Colors.blue,
-                    width: 50,
-                    height: 50,
-                    icon: Icon(
-                      Icons.pause,
-                      color: Colors.white,
-                    ),
-                    onClick: () {
-                      print('Hello');
-                    },
-                  ),
-                ),
+                innerFab(Icons.attach_money, () {
+                  print('Opening money');
+                }),
+                innerFab(Icons.camera, () {
+                  print('Opening camera');
+                }),
+                innerFab(Icons.pause, () {
+                  print('Pausing');
+                }),
                 SizedBox(width: 50),
               ],
             ),
             SizedBox(
               height: 30,
             ),
-            Transform(
-              transform: Matrix4.rotationZ(
-                  getRadiansFromDegrees(rotationAnimationFab.value)),
-              alignment: Alignment.center,
-              child: FAB(
-                color: fabColor.value,
-                width: 60,
-                height: 60,
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                onClick: () {
-                  if (animationController.isCompleted)
-                    animationController.reverse();
-                  else {
-                    animationController.forward();
-                  }
-                  setState(() {
-                    if (_bgColor == null) {
-                      _bgColor = Color(0x90000000);
-                    } else {
-                      _bgColor = null;
-                    }
-                  });
-                },
-              ),
-            ),
+            mainFab(),
             SizedBox(
               height: 30,
             )
@@ -174,7 +104,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-//        color: Colors.black,
         elevation: 0,
         shape: CircularNotchedRectangle(),
         child: Container(
@@ -190,9 +119,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       DashboardScreen(), 1, 'Dashboard', Icons.dashboard),
                 ],
               ),
-
               // Right Tab bar icons
-
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -208,10 +135,52 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
+  Transform mainFab() {
+    return Transform(
+      transform:
+          Matrix4.rotationZ(getRadiansFromDegrees(rotationAnimationFab.value)),
+      alignment: Alignment.center,
+      child: FAB(
+        color: fabColor.value,
+        width: 60,
+        height: 60,
+        icon: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onClick: () {
+          if (animationController.isCompleted)
+            animationController.reverse();
+          else {
+            animationController.forward();
+          }
+        },
+      ),
+    );
+  }
+
+  Transform innerFab(IconData icon, Function onClick) {
+    return Transform(
+      transform:
+          Matrix4.rotationZ(getRadiansFromDegrees(rotationAnimation.value))
+            ..scale(degOneTranslationAnimation.value),
+      alignment: Alignment.center,
+      child: FAB(
+        color: Colors.blue,
+        width: 50,
+        height: 50,
+        icon: Icon(
+          icon,
+          color: Colors.white,
+        ),
+        onClick: onClick,
+      ),
+    );
+  }
+
   MaterialButton appBarButton(
       Widget screen, int index, String str, IconData icon) {
     return MaterialButton(
-      //color: Colors.black,
       minWidth: 40,
       onPressed: () {
         setState(() {
@@ -239,28 +208,5 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   double getRadiansFromDegrees(double deg) {
     return deg / 57.295779513;
-  }
-}
-
-class FAB extends StatelessWidget {
-  final double width;
-  final double height;
-  final Color color;
-  final Icon icon;
-  final Function onClick;
-  FAB({this.width, this.height, this.color, this.icon, this.onClick});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      width: width,
-      height: height,
-      child: IconButton(
-        icon: icon,
-        enableFeedback: true,
-        onPressed: onClick,
-      ),
-    );
   }
 }
