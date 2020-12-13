@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -12,11 +13,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     String id = ThemeProvider.controllerOf(context).currentThemeId;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(
+          'Settings',
+          style: TextStyle(fontSize: 24),
+        ),
+        centerTitle: true,
       ),
       body: ListView(
         children: [
           ListTile(
+            leading: Icon(Icons.brightness_4),
             title: Text('Enable Dark Mode'),
             trailing: Switch(
               value: id == 'actual_light' ? false : true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:git_demo2/Screens/home.dart';
 import 'package:theme_provider/theme_provider.dart';
+
+import 'file:///C:/Users/rouna/Documents/Android_Studio_Flutter/git_demo2/lib/home.dart';
 
 void main() {
   runApp(MyApp());

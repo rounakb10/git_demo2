@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:git_demo2/Screens/add_expense_screen.dart';
 import 'package:git_demo2/Widgets/FAB.dart';
 
-import 'dashboard_screen.dart';
-import 'home_screen.dart';
-import 'settings_screen.dart';
-import 'transactions_screen.dart';
+import 'Screens/add_income_screen.dart';
+import 'Screens/dashboard_screen.dart';
+import 'Screens/home_screen.dart';
+import 'Screens/settings_screen.dart';
+import 'Screens/transactions_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -28,8 +30,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 250));
-//    degOneTranslationAnimation =
-//        Tween(begin: 0.0, end: 1.0).animate(animationController);
 
     degOneTranslationAnimation = TweenSequence([
       TweenSequenceItem<double>(
@@ -80,15 +80,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(width: 50),
-                innerFab(Icons.attach_money, () {
-                  print('Opening money');
-                }),
-                innerFab(Icons.camera, () {
-                  print('Opening camera');
-                }),
-                innerFab(Icons.pause, () {
-                  print('Pausing');
-                }),
+                innerFab(
+                  Icons.trending_up,
+                  () {
+                    print('Opening AddIncome');
+                  },
+                  AddIncomeScreen(),
+                  'Add Income',
+                ),
+                innerFab(
+                  Icons.trending_down,
+                  () {
+                    print('Opening AddExpense');
+                  },
+                  AddExpenseScreen(),
+                  'Add Expense',
+                ),
+//                innerFab(
+//                  Icons.pause,
+//                  () {
+//                    print('Pausing');
+//                  },
+//                  AddExpenseScreen(),
+//                ),
                 SizedBox(width: 50),
               ],
             ),
@@ -159,7 +173,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Transform innerFab(IconData icon, Function onClick) {
+  Transform innerFab(
+      IconData icon, Function onClick, Widget page, String tooltipText) {
     return Transform(
       transform:
           Matrix4.rotationZ(getRadiansFromDegrees(rotationAnimation.value))
@@ -174,6 +189,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           color: Colors.white,
         ),
         onClick: onClick,
+        page: AddExpenseScreen(),
+        tooltipText: tooltipText,
       ),
     );
   }
